@@ -14,7 +14,7 @@ $error = '';
 		}
 		span{
 			color:red;
-			font-size:20px;
+			font-size:19px;
 		}
 		a{
 			text-decoration:none;
