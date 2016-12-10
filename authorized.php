@@ -30,11 +30,11 @@ $error = '';
 	if(!isset($_SESSION['id'])){
 		if(isset($_POST['submit'])){
 			$dbc = mysqli_connect('localhost', 'root', '') or die('Ошибка подключения к базе данных');
-			mysqli_select_db($dbc, 'Code');
+			mysqli_select_db($dbc, 'code-php');
 			$login = mysqli_real_escape_string($dbc, trim($_POST['login']));
 			$password = mysqli_real_escape_string($dbc, trim($_POST['password']));
 			if(!empty($login) && !empty($password)){
-				$query = "SELECT id, login FROM auth WHERE login = '$login' AND password = SHA('$password')";
+				$query = "SELECT id, login FROM authorized WHERE login = '$login' AND password = SHA('$password')";
 				$result = mysqli_query($dbc, $query) or die('Ошибка запроса');
 				if(mysqli_num_rows($result) == 1){
 					$row  = mysqli_fetch_array($result);
@@ -42,7 +42,7 @@ $error = '';
 					$_SESSION['username'] = $row['login'];
 					setcookie('user_id', $row['id'], time() + (60 * 60 * 24 * 7));
 					setcookie('username', $row['login'], time() + (60 * 60 * 24 * 7));
-					$home_url = 'http://'. $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . 'authorized.php';
+					$home_url = 'http://'. $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/authorized.php';
 					header('Refresh: 5; url=' . $home_url);
 				}
 				else{
