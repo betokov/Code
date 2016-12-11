@@ -10,11 +10,11 @@
 
 	$dbc = mysqli_connect('localhost', 'root', '') or die('ошибка подключения к базе данных');
 	mysqli_select_db($dbc, 'code-php') or die ('ошибка выбора базы данных');
-		$query = "SELECT 'login', 'password' FROM authorized";
+		$query = "SELECT 'login', 'password' FROM authorized WHERE password = SHA('password')";
 		$result = mysqli_query($dbc, $query) or die('Ошибка запроса');
 		while($row = mysqli_fetch_array($result)){
 			$login = $row['login'];
-			$password = $row['password'];
+			$password = $row[SHA('password')];
 		}
 	mysqli_close($dbc);
 	
